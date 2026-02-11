@@ -45,7 +45,7 @@
           # pulumi
           sops
           talosctl
-          omnictl
+          # omnictl
           talhelper
           terraform
           trivy
@@ -128,6 +128,7 @@
           "appgate-sdp-client"
           "adobe-acrobat-reader"
           "visual-studio-code"
+          "claude-code"
           # "google-cloud-sdk"
           # "google-chrome"
         #   "iina"
