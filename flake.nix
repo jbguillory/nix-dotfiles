@@ -73,7 +73,7 @@
           nixpkgs.hostPlatform = "aarch64-darwin";
           # security.pam.enableSudoTouchIdAuth = true;
 
-          users.users.john.guillory.home = "/Users/john.guillory";
+          users.users."john.guillory".home = "/Users/john.guillory";
           home-manager.backupFileExtension = "backup";
           # nix.configureBuildUsers = true;
           # nix.useDaemon = true;
