@@ -130,7 +130,6 @@
               "slack"
               "spotify"
               "sf-symbols"
-              "zoom"
               "appgate-sdp-client"
               "adobe-acrobat-reader"
               "visual-studio-code"
