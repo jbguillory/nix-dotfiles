@@ -4,11 +4,11 @@
 { config, pkgs, ... }:
 
 {
-  home.username = "christianrolland";
-  home.homeDirectory = "/Users/christianrolland";
+  home.username = "jbguillory";
+  home.homeDirectory = "/Users/jbguillory";
   home.stateVersion = "23.05"; # Please read the comment before changing.
 
-# Makes sense for user specific applications that shouldn't be available system-wide
+  # Makes sense for user specific applications that shouldn't be available system-wide
   home.packages = [
   ];
 
@@ -31,7 +31,6 @@
     # ".config/nvim/after".source = ./nvim/after;
     ".config/nix".source = ./nix;
     # ".config/nix-darwin".source = /Users/christianrolland/nix-dotfiles/nix-darwin;
-    ".config/tmux".source = ./tmux;
     ".config/k9s".source = ./k9s;
     # ".config/ghostty".source = ~/dotfiles/ghostty;
     # ".config/aerospace".source = ~/dotfiles/aerospace;
