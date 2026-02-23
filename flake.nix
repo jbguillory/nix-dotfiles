@@ -213,7 +213,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.john.guillory = import ./home/home.nix;
+            home-manager.users."john.guillory" = import ./home/home.nix;
           }
         ];
       };
