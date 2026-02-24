@@ -176,6 +176,7 @@
               "helmfile"
               "fluxcd/tap/flux"
               "krew"
+              "displayplacer"
               "kubernetes-cli"
               "kubelogin"
               "pulumi"
@@ -197,7 +198,7 @@
             # masApps = {
             #   "Slack" = 803453959;
             # };
-            onActivation.cleanup = "zap";
+            onActivation.cleanup = "uninstall";
             onActivation.autoUpdate = true;
             onActivation.upgrade = true;
           };

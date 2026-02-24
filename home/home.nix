@@ -1,9 +1,13 @@
 # home.nix
 # home-manager switch
 
-{ config, pkgs, ... }:
-
+{ config, pkgs, lib, ... }:
 {
+  imports = [
+    ./vscode/vscode.nix
+  ];
+
+
   home.username = "john.guillory";
   home.homeDirectory = "/Users/john.guillory";
   home.stateVersion = "23.05"; # Please read the comment before changing.
@@ -47,24 +51,24 @@
 
   home.sessionVariables = {
   };
-
+  # disable mouse inversion
+  home.activation.mouseSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    /usr/bin/defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+  '';
+  # temporary banner notificationSettings
+  home.activation.notificationSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  /usr/bin/defaults write com.apple.ncprefs dnd-prefs -dict-add alertStyle -int 1
+  for app in $(ls /Applications/*.app /System/Applications/*.app 2>/dev/null); do
+    bundle_id=$(mdls -name kMDItemCFBundleIdentifier -raw "$app" 2>/dev/null)
+    if [ "$bundle_id" != "(null)" ] && [ -n "$bundle_id" ]; then
+      /usr/bin/defaults write "$bundle_id" NSUserNotificationAlertStyle -string "banner"
+    fi
+  done
+'';
   home.sessionPath = [
     "/run/current-system/sw/bin"
     "$HOME/.nix-profile/bin"
   ];
   programs.home-manager.enable = true;
-  programs.zsh = {
-    enable = true;
-    initExtra = ''
-      # Add any additional configurations here
-      export PATH=/go/bin:/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH
-      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-        . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-      fi
 
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-
-      export ZDOTDIR="$HOME/.config/zsh"
-    '';
-  };
 }
