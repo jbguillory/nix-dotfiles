@@ -5,6 +5,7 @@
 {
   imports = [
     ./vscode/vscode.nix
+    ./zsh/zsh.nix
   ];
 
 
