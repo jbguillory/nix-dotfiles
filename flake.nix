@@ -66,6 +66,7 @@
             awscli2
             go-task
             pkgs.twofctl
+            kubectx
           ];
           nix.settings.experimental-features = "nix-command flakes";
           programs.zsh.enable = true;
