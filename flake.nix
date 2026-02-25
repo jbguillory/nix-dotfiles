@@ -19,11 +19,16 @@
     twofctl = {
       url = "git+https://code.il2.gamewarden.io/gamewarden/platform/2fctl.git";
     };
+    nur = {
+    url = "github:nix-community/NUR";
+    inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     inputs@{
       self,
+      nur,
       twofctl,
       nix-darwin,
       nixpkgs,
@@ -190,7 +195,7 @@
             home-manager.useUserPackages = true;
             home-manager.users."john.guillory" = import ./home/home.nix;
             home-manager.sharedModules = [ lazyvim.homeManagerModules.lazyvim ];
-            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.extraSpecialArgs = { inherit inputs nur; };
             nix.enable = false;
           }
         ];

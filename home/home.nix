@@ -6,6 +6,7 @@
   imports = [
     ./vscode/vscode.nix
     ./zsh/zsh.nix
+    ./firefox/firefox.nix
   ];
 
 
