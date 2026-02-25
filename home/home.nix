@@ -37,7 +37,7 @@
     # ".config/nix-darwin".source = /Users/christianrolland/nix-dotfiles/nix-darwin;
     ".config/k9s".source = ./k9s;
     # ".config/ghostty".source = ~/dotfiles/ghostty;
-    # ".config/aerospace".source = ~/dotfiles/aerospace;
+    ".config/aerospace".source = ./aerospace;
     ".config/sketchybar".source = ./sketchybar;
     # ".config/nushell".source = ~/dotfiles/nushell;
 
@@ -56,14 +56,9 @@
     /usr/bin/defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
   '';
   # temporary banner notificationSettings
-  home.activation.notificationSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
-  /usr/bin/defaults write com.apple.ncprefs dnd-prefs -dict-add alertStyle -int 1
-  for app in $(ls /Applications/*.app /System/Applications/*.app 2>/dev/null); do
-    bundle_id=$(mdls -name kMDItemCFBundleIdentifier -raw "$app" 2>/dev/null)
-    if [ "$bundle_id" != "(null)" ] && [ -n "$bundle_id" ]; then
-      /usr/bin/defaults write "$bundle_id" NSUserNotificationAlertStyle -string "banner"
-    fi
-  done
+home.activation.notificationSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  /usr/bin/defaults write com.apple.notificationcenterui NSUserNotificationAlertStyle -string "banner"
+  /usr/bin/killall NotificationCenter 2>/dev/null || true
 '';
   home.sessionPath = [
     "/run/current-system/sw/bin"

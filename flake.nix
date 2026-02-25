@@ -114,11 +114,11 @@
             #   "mas"
             # ];
             casks = [
-              #   "hammerspoon"
+              "nikitabobko/tap/aerospace"
               "firefox"
               # "wireshark"
               "bitwarden"
-              # "docker"
+               "docker"
               "font-fira-code"
               "font-fira-code-nerd-font"
               "font-victor-mono-nerd-font"
@@ -186,6 +186,7 @@
               "hashicorp/tap/vault"
             ];
             taps = [
+              "nikitabobko/tap"
               "koekeishiya/formulae"
               "smudge/smudge"
               # "homebrew/cask-fonts"
