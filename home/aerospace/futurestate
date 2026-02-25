@@ -1,0 +1,90 @@
+# Start AeroSpace at login
+start-at-login = true
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+default-root-container-layout = 'accordion'
+default-root-container-orientation = 'auto'
+automatically-unhide-macos-hidden-apps = true
+accordion-padding = 300
+
+[gaps]
+inner.horizontal = 10
+inner.vertical =   10
+outer.left =       10
+outer.bottom =     10
+outer.top =        10
+outer.right =      10
+
+[key-mapping]
+preset = 'qwerty'
+
+[workspace-to-monitor-force-assignment]
+A = 'Built-in Retina Display'
+
+[mode.main.binding]
+# Focus window
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# Move window
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# Focus workspace
+alt-t = 'workspace Terminal'
+alt-g = 'workspace Gitlab'
+alt-c = 'workspace Code'
+alt-w = 'workspace Search'
+alt-d = 'workspace Present'
+alt-e = 'workspace Work'
+alt-x = 'workspace Personal'
+alt-q = 'workspace Scratch'
+alt-s = ['workspace Slack', 'exec-and-forget /usr/bin/open -a "/Applications/Slack.app"']
+alt-v = ['workspace Meet', 'exec-and-forget /usr/bin/open -a "/Applications/Firefox.app"']
+alt-a = ['workspace Chrome', 'exec-and-forget /usr/bin/open -a "/Applications/Google Chrome.app"']
+
+# Move window to workspace and follow
+alt-shift-t = 'move-node-to-workspace Terminal --focus-follows-window'
+alt-shift-g = 'move-node-to-workspace Gitlab --focus-follows-window'
+alt-shift-c = 'move-node-to-workspace Code --focus-follows-window'
+alt-shift-s = 'move-node-to-workspace Slack --focus-follows-window'
+alt-shift-w = 'move-node-to-workspace Search --focus-follows-window'
+alt-shift-d = 'move-node-to-workspace Present --focus-follows-window'
+alt-shift-v = 'move-node-to-workspace Meet --focus-follows-window'
+alt-shift-e = 'move-node-to-workspace Work --focus-follows-window'
+alt-shift-x = 'move-node-to-workspace Personal --focus-follows-window'
+alt-shift-q = 'move-node-to-workspace Scratch --focus-follows-window'
+alt-shift-a = 'move-node-to-workspace Chrome --focus-follows-window'
+
+# Layout toggles
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
+alt-ctrl-f = 'layout floating tiling'
+alt-f = 'fullscreen'
+
+# Misc
+alt-tab = 'workspace-back-and-forth'
+alt-m = 'exec-and-forget /usr/bin/osascript -e "tell application \"System Events\" to keystroke \"m\" using command down"'
+
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']
+
+[[on-window-detected]]
+if.workspace = 'Slack'
+if.app-name-regex-substring = 'Slack'
+run = 'layout tiling'
+
+[[on-window-detected]]
+if.workspace = 'Chrome'
+if.app-name-regex-substring = 'Google Chrome'
+run = 'layout tiling'
+
+[[on-window-detected]]
+if.workspace = 'Meet'
+if.app-name-regex-substring = 'firefox'
+run = 'layout tiling'

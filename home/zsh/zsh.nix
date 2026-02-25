@@ -11,7 +11,7 @@
     '';
     initContent = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
-
+      eval "$(zoxide init zsh)"
       # Navigation
       setopt AUTO_CD
       setopt AUTO_PUSHD
