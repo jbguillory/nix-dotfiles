@@ -44,6 +44,7 @@
         {
           environment.systemPackages = with pkgs; [
             direnv
+            zoxide
             sshs
             glow
             nushell
@@ -100,6 +101,10 @@
             ];
             screencapture.location = "~/Pictures/screenshots";
           };
+          system.activationScripts.postActivation.text = ''
+          /usr/bin/sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" \
+          "INSERT OR REPLACE INTO access VALUES('kTCCServiceAppleEvents','com.microsoft.VSCode',0,2,4,1,NULL,NULL,0,'UNUSED',NULL,0,1);" 2>/dev/null || true
+          '';
 
           homebrew = {
             enable = true;

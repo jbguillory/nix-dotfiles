@@ -14,7 +14,7 @@ alias gp="git push"
 alias gl="git pull"
 alias ga="git add"
 alias kx="kubectx"
-
+alias z="zoxide"
 complete -o default -F __start_kubectl 0x7c73
 
 # Zsh config shortcuts
