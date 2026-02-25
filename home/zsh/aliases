@@ -12,6 +12,7 @@ alias gcreds='source ~/.config/2fctl/gcpCredentials.sh'
 alias rb='sudo darwin-rebuild switch --flake .'
 alias gp="git push"
 alias gl="git pull"
+alias ga="git add"
 
 
 complete -o default -F __start_kubectl 0x7c73

@@ -23,24 +23,15 @@
     ".config/zsh".source = ./zsh;
     ".config/atuin".source = ./atuin;
     ".config/kitty".source = ./kitty;
-    ".zshrc".source = ./zsh/.zshrc;
     ".zshenv".source = ./zsh/.zshenv;
-    # ".zshrc".source = ./zshrc/.zshrc;
-    # ".config/wezterm".source = ~/dotfiles/wezterm;
-    # ".config/skhd".source = ~/dotfiles/skhd;
-    ".config/starship".source = ./starship;
-    # ".config/zellij".source = ~/dotfiles/zellij;
     # ".config/nvim".source = ./nvim;
     ".config/nvim/init.lua".source = ./nvim/init.lua;
     ".config/nvim/lua".source = ./nvim/lua;
     # ".config/nvim/after".source = ./nvim/after;
     ".config/nix".source = ./nix;
-    # ".config/nix-darwin".source = /Users/christianrolland/nix-dotfiles/nix-darwin;
     ".config/k9s".source = ./k9s;
-    # ".config/ghostty".source = ~/dotfiles/ghostty;
     ".config/aerospace".source = ./aerospace;
     ".config/sketchybar".source = ./sketchybar;
-    # ".config/nushell".source = ~/dotfiles/nushell;
 
     # git
     ".gitconfig".source = ./git/.gitconfig;
@@ -65,6 +56,9 @@ home.activation.nixConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
   if ! grep -q "netrc-file" ~/.config/nix/nix.conf 2>/dev/null; then
     echo "netrc-file = /Users/john.guillory/.netrc" >> ~/.config/nix/nix.conf
   fi
+'';
+home.activation.createAwsDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  mkdir -p ~/.aws
 '';
   home.sessionPath = [
     "/run/current-system/sw/bin"
