@@ -1,24 +1,32 @@
 {
   description = "My Darwin system flake";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
-    # nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+inputs = {
+  nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  nix-darwin.url = "github:nix-darwin/nix-darwin/master";
+  nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+  home-manager = {
+    url = "github:nix-community/home-manager";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
+  nix-vscode-extensions = {
+    url = "github:nix-community/nix-vscode-extensions";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+  lazyvim = {
+    url = "github:pfassina/lazyvim-nix";
+  };
+};
 
-  outputs =
-    inputs@{
-      self,
-      nix-darwin,
-      nixpkgs,
-      home-manager,
-    }:
+outputs =
+  inputs@{
+    self,
+    nix-darwin,
+    nixpkgs,
+    home-manager,
+    nix-vscode-extensions,
+    lazyvim,
+  }:
     let
 
       # Enable Zsh shell
@@ -215,6 +223,8 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users."john.guillory" = import ./home/home.nix;
+            home-manager.sharedModules = [ lazyvim.homeManagerModules.lazyvim ];
+            home-manager.extraSpecialArgs = { inherit inputs; };
             nix.enable = false;
           }
         ];
