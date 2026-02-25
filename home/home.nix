@@ -61,6 +61,11 @@ home.activation.notificationSettings = lib.hm.dag.entryAfter ["writeBoundary"] '
   /usr/bin/defaults write com.apple.notificationcenterui NSUserNotificationAlertStyle -string "banner"
   /usr/bin/killall NotificationCenter 2>/dev/null || true
 '';
+home.activation.nixConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  if ! grep -q "netrc-file" ~/.config/nix/nix.conf 2>/dev/null; then
+    echo "netrc-file = /Users/john.guillory/.netrc" >> ~/.config/nix/nix.conf
+  fi
+'';
   home.sessionPath = [
     "/run/current-system/sw/bin"
     "$HOME/.nix-profile/bin"

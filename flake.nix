@@ -1,94 +1,76 @@
 {
   description = "My Darwin system flake";
 
-inputs = {
-  nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  nix-darwin.url = "github:nix-darwin/nix-darwin/master";
-  nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-  home-manager = {
-    url = "github:nix-community/home-manager";
-    inputs.nixpkgs.follows = "nixpkgs";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    lazyvim = {
+      url = "github:pfassina/lazyvim-nix";
+    };
+    twofctl = {
+      url = "git+https://code.il2.gamewarden.io/gamewarden/platform/2fctl.git";
+    };
   };
-  nix-vscode-extensions = {
-    url = "github:nix-community/nix-vscode-extensions";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-  lazyvim = {
-    url = "github:pfassina/lazyvim-nix";
-  };
-};
 
-outputs =
-  inputs@{
-    self,
-    nix-darwin,
-    nixpkgs,
-    home-manager,
-    nix-vscode-extensions,
-    lazyvim,
-  }:
+  outputs =
+    inputs@{
+      self,
+      twofctl,
+      nix-darwin,
+      nixpkgs,
+      home-manager,
+      nix-vscode-extensions,
+      lazyvim,
+    }:
     let
-
-      # Enable Zsh shell
       programs.zsh.enable = true;
 
       configuration =
         { pkgs, ... }:
         {
-          # List packages installed in system profile. To search by name, run:
-          # $ nix-env -qaP | grep wget
           environment.systemPackages = with pkgs; [
-            # vim
             direnv
             sshs
             glow
             nushell
             carapace
-            # neovim
-            # vscode
             obsidian
             google-chrome
             brave
             direnv
-            # kubectl
             go
             python3
             age
             dive
-            # flux
             nodejs
-            # pulumi
             sops
             talosctl
-            # omnictl
             talhelper
             terraform
             trivy
             sketchybar
-            # krew
-            # tmux
-            # google-cloud-sdk
             awscli2
             go-task
-            # kustomize
-            # docker-client
+            pkgs.twofctl
           ];
-          # services.nix-daemon.enable = true;
           nix.settings.experimental-features = "nix-command flakes";
-          programs.zsh.enable = true; # default shell on catalina
+          programs.zsh.enable = true;
           system.configurationRevision = self.rev or self.dirtyRev or null;
           system.stateVersion = 4;
           nixpkgs.hostPlatform = "aarch64-darwin";
-          # security.pam.enableSudoTouchIdAuth = true;
-
           users.users."john.guillory".home = "/Users/john.guillory";
           home-manager.backupFileExtension = "backup";
-          # nix.configureBuildUsers = true;
-          # nix.useDaemon = true;
           ids.gids.nixbld = 350;
           system.primaryUser = "john.guillory";
-
-          # Allow unfree packages
           nixpkgs.config.allowUnfree = true;
 
           system.defaults = {
@@ -110,23 +92,16 @@ outputs =
               "/System/Applications/Mail.app"
               "/System/Applications/Calendar.app"
             ];
-            # loginwindow.LoginwindowText = "devops-toolbox";
             screencapture.location = "~/Pictures/screenshots";
-            # screensaver.askForPasswordDelay = 10;
           };
 
-          # Homebrew packages
           homebrew = {
             enable = true;
-            # brews = [
-            #   "mas"
-            # ];
             casks = [
               "nikitabobko/tap/aerospace"
               "firefox"
-              # "wireshark"
               "bitwarden"
-               "docker"
+              "docker"
               "font-fira-code"
               "font-fira-code-nerd-font"
               "font-victor-mono-nerd-font"
@@ -142,10 +117,6 @@ outputs =
               "adobe-acrobat-reader"
               "visual-studio-code"
               "claude-code"
-              # "google-cloud-sdk"
-              # "google-chrome"
-              #   "iina"
-              #   "the-unarchiver"
             ];
             brews = [
               "atuin"
@@ -160,19 +131,15 @@ outputs =
               "git"
               "glab"
               "glow"
-              # "imagemagick"
               "jq"
               "jp2a"
               "k9s"
               "mpv"
               "neofetch"
-              # "nightlight"
               "nnn"
               "pastel"
               "poppler"
               "ripgrep"
-              # "skhd"
-              # "sketchybar"
               "spotify_player"
               "starship"
               "tmux"
@@ -197,16 +164,10 @@ outputs =
               "nikitabobko/tap"
               "koekeishiya/formulae"
               "smudge/smudge"
-              # "homebrew/cask-fonts"
               "FelixKratz/formulae"
               "hashicorp/tap"
               "fluxcd/tap"
-              # "go-task/tap/go-task"
             ];
-
-            # masApps = {
-            #   "Slack" = 803453959;
-            # };
             onActivation.cleanup = "uninstall";
             onActivation.autoUpdate = true;
             onActivation.upgrade = true;
@@ -216,6 +177,11 @@ outputs =
     {
       darwinConfigurations."MacBook-Pro" = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
+        pkgs = import nixpkgs {
+          system = "aarch64-darwin";
+          config.allowUnfree = true;
+          overlays = [ twofctl.overlays.default ];
+        };
         modules = [
           configuration
           home-manager.darwinModules.home-manager
@@ -230,7 +196,6 @@ outputs =
         ];
       };
 
-      # Expose the package set, including overlays, for convenience.
       darwinPackages = self.darwinConfigurations."MacBook-Pro".pkgs;
     };
 }
