@@ -8,6 +8,7 @@
       export XDG_DATA_HOME="$HOME/.local/share"
       export XDG_CACHE_HOME="$HOME/.cache"
       export XDG_BIN_HOME="$HOME/.local/bin"
+      export GPG_TTY=$(tty)
     '';
     initContent = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"

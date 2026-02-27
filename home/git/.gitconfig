@@ -4,4 +4,5 @@
 
 [include]
   path = ~/.gitconfig.local
-  path = ~/.gitconfig-2F
+[includeIf "gitdir:~/workspace/"]
+  path = /Users/john.guillory/workspace/.gitconfig-2F
