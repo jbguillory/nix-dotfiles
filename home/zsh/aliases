@@ -14,6 +14,8 @@ alias gp="git push"
 alias gl="git pull"
 alias ga="git add"
 alias kx="kubectx"
+alias pps="pulumi stack select"
+alias gpsup='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 complete -o default -F __start_kubectl 0x7c73
 
 # Zsh config shortcuts

@@ -1,6 +1,6 @@
 [user]
   name = Blair Guillory
   email = john.guillory@secondfront.com
-  signingkey =  C6805809D5D717BD
+  signingkey =  C00E938D5B26C850
 [commit]
   gpgsign = true

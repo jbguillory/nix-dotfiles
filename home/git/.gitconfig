@@ -4,3 +4,4 @@
 
 [include]
   path = ~/.gitconfig.local
+  path = ~/.gitconfig-2F

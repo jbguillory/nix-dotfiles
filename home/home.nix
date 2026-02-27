@@ -43,6 +43,7 @@
   };
 
   home.sessionVariables = {
+    GPG_TTY = "$(tty)";
   };
   # disable mouse inversion
   home.activation.mouseSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
