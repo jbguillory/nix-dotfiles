@@ -157,7 +157,6 @@
               "tmuxinator"
               "trash-cli"
               "zsh"
-              "nvim"
               "helm"
               "helmfile"
               "fluxcd/tap/flux"
@@ -200,7 +199,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users."john.guillory" = import ./home/home.nix;
-            home-manager.sharedModules = [ lazyvim.homeManagerModules.lazyvim ];
+            home-manager.sharedModules = [ lazyvim.homeManagerModules.default ];
             home-manager.extraSpecialArgs = { inherit inputs nur; };
             nix.enable = false;
           }
